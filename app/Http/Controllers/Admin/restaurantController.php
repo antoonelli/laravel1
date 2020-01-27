@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\RestaurantRequest;
 use App\Restaurant;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class restaurantController extends Controller
     {
         return view('admin.restaurants.store');
     }
-    public function store(Request $request)
+    public function store(RestaurantRequest $request)
     {
         Restaurant::create($request->all());
 
@@ -27,7 +28,7 @@ class restaurantController extends Controller
     {
         return view('admin.restaurants.edit', compact('restaurant'));
     }
-    public function update(Request $request, $id)
+    public function update(RestaurantRequest $request, $id)
     {
         if ($dado = Restaurant::find($id)) {
             $dado->update($request->all());

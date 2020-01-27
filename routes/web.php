@@ -15,11 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('admin')->group(function () {
-    Route::get('restaurant', 'Admin\restaurantController@index')->name('restaurant.index');
-    Route::get('restaurant/new', 'Admin\restaurantController@new')->name('restaurant.new');
-    Route::post('restaurant/store', 'Admin\restaurantController@store')->name('restaurant.store');
-    Route::get('restaurant/edit/{restaurant}', 'Admin\restaurantController@edit')->name('restaurant.edit');
-    Route::post('restaurant/update/{id}', 'Admin\restaurantController@update')->name('restaurant.update');
-    Route::get('restaurant/delete/{id}', 'Admin\restaurantController@delete')->name('restaurant.delete');
+Route::prefix('admin')->as('restaurant.')->namespace('Admin')->group(function () {
+    Route::get('restaurant', 'restaurantController@index')->name('index');
+    Route::get('restaurant/new', 'restaurantController@new')->name('new');
+    Route::post('restaurant/store', 'restaurantController@store')->name('store');
+    Route::get('restaurant/edit/{restaurant}', 'restaurantController@edit')->name('edit');
+    Route::post('restaurant/update/{id}', 'restaurantController@update')->name('update');
+    Route::get('restaurant/delete/{id}', 'restaurantController@delete')->name('delete');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
