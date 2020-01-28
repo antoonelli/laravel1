@@ -28,7 +28,7 @@
             </span>
             @endif
         </p>
-
+        
         <p class="form-group">
             <label>Fale sobre o restaurante</label>
             <textarea name="description" id="" cols="30" rows="10" class="form-control @if($errors->has('name')) is-invalid @endif">{{old('description')}}</textarea>

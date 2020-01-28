@@ -14,15 +14,27 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::prefix('admin')->as('restaurant.')->namespace('Admin')->group(function () {
-    Route::get('restaurant', 'restaurantController@index')->name('index');
-    Route::get('restaurant/new', 'restaurantController@new')->name('new');
-    Route::post('restaurant/store', 'restaurantController@store')->name('store');
-    Route::get('restaurant/edit/{restaurant}', 'restaurantController@edit')->name('edit');
-    Route::post('restaurant/update/{id}', 'restaurantController@update')->name('update');
-    Route::get('restaurant/delete/{id}', 'restaurantController@delete')->name('delete');
+Route::group(['middleware' => ['auth']], function () {
+    Route::prefix('admin')->namespace('Admin')->group(function () {
+        Route::prefix('restaurant')->as('restaurant.')->group(function () {
+            Route::get('/', 'restaurantController@index')               ->name('index');
+            Route::get('new', 'restaurantController@new')               ->name('new');
+            Route::post('store', 'restaurantController@store')          ->name('store');
+            Route::get('edit/{restaurant}', 'restaurantController@edit')->name('edit');
+            Route::post('update/{id}', 'restaurantController@update')   ->name('update');
+            Route::get('delete/{id}', 'restaurantController@delete')    ->name('delete');
+        });
+        Route::prefix('users')->as('user.')->group(function () {
+            Route::get('/', 'userController@index')               ->name('index');
+            Route::get('new', 'userController@new')               ->name('new');
+            Route::post('store', 'userController@store')          ->name('store');
+            Route::get('edit/{user}', 'userController@edit')      ->name('edit');
+            Route::post('update/{id}', 'userController@update')   ->name('update');
+            Route::get('delete/{id}', 'userController@delete')    ->name('delete');
+        });
+    });
 });
+
 
 Auth::routes();
 
