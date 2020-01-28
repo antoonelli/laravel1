@@ -32,6 +32,14 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('update/{id}', 'userController@update')   ->name('update');
             Route::get('delete/{id}', 'userController@delete')    ->name('delete');
         });
+        Route::prefix('menus')->as('menu.')->group(function () {
+            Route::get('/', 'userController@index')               ->name('index');
+            Route::get('new', 'userController@new')               ->name('new');
+            Route::post('store', 'userController@store')          ->name('store');
+            Route::get('edit/{menu}', 'userController@edit')      ->name('edit');
+            Route::post('update/{id}', 'userController@update')   ->name('update');
+            Route::get('delete/{id}', 'userController@delete')    ->name('delete');
+        });
     });
 });
 
