@@ -22,8 +22,8 @@ class userController extends Controller
         $userData  = $request->all();
         $userData['password'] = bcrypt($userData['password']);
         User::create($userData);
-
-        echo 'User criado com sucesso';
+        flash('User criado com sucesso')->success();
+        return redirect()->route('user.index');
     }
     public function edit(User $user)
     {
@@ -37,7 +37,8 @@ class userController extends Controller
         }
         if ($dado = User::find($id)) {
             $dado->update($userData);
-            return 'dados alterados';
+            flash('Dados do usuario alterado com sucesso')->success();
+            return redirect()->route('user.index');
         }
         return 'erro 500300';
     }
@@ -45,7 +46,8 @@ class userController extends Controller
     {
         if ($dado = User::find($id)) {
             $dado->delete();
-            return 'deletado com sucesso';
+            flash('User deletado com sucesso')->success();
+            return redirect()->route('user.index');
         }
         return 'nao foi possivel deletar o User';
     }

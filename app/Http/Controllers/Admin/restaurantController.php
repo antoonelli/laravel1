@@ -22,7 +22,8 @@ class restaurantController extends Controller
     {
         Restaurant::create($request->all());
 
-        echo 'restautante criado com sucesso';
+        flash('Restaurate criado com sucesso')->success();
+        return redirect()->route('restaurants.index');
     }
     public function edit(Restaurant $restaurant)
     {
@@ -32,7 +33,8 @@ class restaurantController extends Controller
     {
         if ($dado = Restaurant::find($id)) {
             $dado->update($request->all());
-            return 'dados alterados';
+            flash('Dados alterados com sucesso')->success();
+            return redirect()->route('restaurants.index');
         }
         return 'erro 500300';
     }
@@ -40,7 +42,8 @@ class restaurantController extends Controller
     {
         if ($dado = Restaurant::find($id)) {
             $dado->delete();
-            return 'deletado com sucesso';
+            flash('Restaurant apagado com sucesso')->success();
+            return redirect()->route('restaurants.index');
         }
         return 'nao foi possivel deletar o restaurant';
     }
